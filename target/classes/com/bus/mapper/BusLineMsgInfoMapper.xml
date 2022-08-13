@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bus.mapper.BusLineMsgInfoMapper">
+  <resultMap id="BaseResultMap" type="com.bus.pojo.BusLineMsgInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="line_id" property="lineId" jdbcType="INTEGER" />
+  <result column="no" property="no" jdbcType="VARCHAR" />
+  <result column="station_id" property="stationId" jdbcType="INTEGER" />
+  <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+     id,line_id,no,station_id,create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.bus.pojo.BusLineMsgInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bus_line_msg_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="startRow >= 0 and pageRows > 0">
+      limit ${startRow},${pageRows}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+     from bus_line_msg_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+   delete from bus_line_msg_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bus.pojo.BusLineMsgInfoExample">
+    delete from bus_line_msg_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bus.pojo.BusLineMsgInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+      insert into bus_line_msg_info (line_id,no,station_id,create_time)
+      values (	#{id,jdbcType=INTEGER},	#{lineId,jdbcType=INTEGER},	#{no,jdbcType=VARCHAR},	#{stationId,jdbcType=INTEGER},	#{createTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bus.pojo.BusLineMsgInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into bus_line_msg_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null" >
+	  id,
+ </if>
+<if test="lineId != null" >
+	  line_id,
+ </if>
+<if test="no != null" >
+	  no,
+ </if>
+<if test="stationId != null" >
+	  station_id,
+ </if>
+<if test="createTime != null" >
+	  create_time
+ </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+         <if test="id != null" >
+	 #{id,jdbcType=INTEGER},
+	 </if>
+  <if test="lineId != null" >
+	 #{lineId,jdbcType=INTEGER},
+	 </if>
+  <if test="no != null" >
+	 #{no,jdbcType=VARCHAR},
+	 </if>
+  <if test="stationId != null" >
+	 #{stationId,jdbcType=INTEGER},
+	 </if>
+  <if test="createTime != null" >
+	 #{createTime,jdbcType=VARCHAR},
+	 </if>
+
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bus.pojo.BusLineMsgInfoExample" resultType="java.lang.Long">
+    select count(*) from bus_line_msg_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update bus_line_msg_info
+    <set>
+       <if test="record.id != null" >
+	 id = #{record.id,jdbcType=INTEGER},
+</if>
+ <if test="record.lineId != null" >
+	 line_id = #{record.lineId,jdbcType=INTEGER},
+</if>
+ <if test="record.no != null" >
+	 no = #{record.no,jdbcType=VARCHAR},
+</if>
+ <if test="record.stationId != null" >
+	 station_id = #{record.stationId,jdbcType=INTEGER},
+</if>
+ <if test="record.createTime != null" >
+	 create_time = #{record.createTime,jdbcType=VARCHAR}
+</if>
+
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update bus_line_msg_info
+    set 
+    				id = #{record.id,jdbcType=INTEGER},	line_id = #{record.lineId,jdbcType=INTEGER},	no = #{record.no,jdbcType=VARCHAR},	station_id = #{record.stationId,jdbcType=INTEGER},	create_time = #{record.createTime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bus.pojo.BusLineMsgInfo">
+    update bus_line_msg_info
+    <set>
+       <if test="id != null" >
+	 id = #{id,jdbcType=INTEGER},
+</if>
+ <if test="lineId != null" >
+	 line_id = #{lineId,jdbcType=INTEGER},
+</if>
+ <if test="no != null" >
+	 no = #{no,jdbcType=VARCHAR},
+</if>
+ <if test="stationId != null" >
+	 station_id = #{stationId,jdbcType=INTEGER},
+</if>
+ <if test="createTime != null" >
+	 create_time = #{createTime,jdbcType=VARCHAR}
+</if>
+
+    </set>
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bus.pojo.BusLineMsgInfo">
+    update bus_line_msg_info
+    set 
+     			id = #{id,jdbcType=INTEGER},	line_id = #{lineId,jdbcType=INTEGER},	no = #{no,jdbcType=VARCHAR},	station_id = #{stationId,jdbcType=INTEGER},	create_time = #{createTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
